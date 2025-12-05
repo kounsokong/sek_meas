@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Invoice - Angkobodia Logistics Co., Ltd</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 5mm 5mm 5mm 5mm;
+    }
+
+    body {
+      font-family: "Khmer OS Battambang", Arial, sans-serif;
+      width: 205mm;
+      margin: 0 auto;
+      color: #000;
+      font-size: 10px;
+      line-height: 1.2;
+      background: #f5f5f5;
+      padding: 5mm 0;
+    }
+
+    .invoice-container {
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 5mm;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 5px;
+      position: running(header);
+    }
+
+    .header img {
+      width: 100%;
+      max-height: 160px;
+      object-fit: contain;
+      display: block;
+    }
+
+    @page {
+      @top-center {
+        content: element(header);
+      }
+    }
+
+    .title {
+      text-align: center;
+      margin: 3px 0;
+    }
+
+    .title h2 {
+      font-size: 14px;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 3px 4px;
+      vertical-align: top;
+    }
+
+    .no-border td {
+      border: none;
+      padding: 2px 0;
+    }
+
+    .invoice-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .invoice-info .left {
+      width: 60%;
+      border: 1px solid #000;
+      padding: 6px 8px;
+      border-radius: 2px;
+    }
+
+    .invoice-info .right {
+      width: 35%;
+    }
+
+    .invoice-meta td {
+      vertical-align: top;
+      padding: 2px 6px;
+    }
+
+    .kh-label {
+      font-family: "Khmer OS Battambang", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: -2px;
+    }
+
+    .meta-value {
+      text-align: left;
+      font-size: 12px;
+      padding-left: 10px;
+      font-weight: normal;
+      position: relative;
+    }
+
+    .meta-value strong {
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .dotted-line {
+      border-bottom: 2px dotted #000;
+      width: 100%;
+      margin-top: 2px;
+    }
+
+
+    .right {
+      text-align: right;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .exchange {
+      margin-top: 6px;
+      font-size: 10px;
+    }
+
+    .totals {
+      width: 45%;
+      float: right;
+      margin-top: 2px;
+      margin-bottom: 50px;
+      border-collapse: collapse;
+    }
+
+    .totals td {
+      border: none;
+      padding: 3px 0;
+    }
+
+    .totals .bold td {
+      border-top: 2px solid #000;
+    }
+
+    .footer {
+      clear: both;
+      margin-top: 20px;
+      page-break-inside: avoid;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .signature {
+      width: 45%;
+      text-align: center;
+    }
+
+    .signature-line {
+      border-top: 1px solid #000;
+      width: 80%;
+      margin: 35px auto 5px;
+    }
+
+    .note {
+      font-size: 8px;
+      margin-top: 0px;
+      clear: both;
+    }
+
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
+    .print-button:hover {
+      background: #0056b3;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      
+      .invoice-container {
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .print-button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button" onclick="window.print()">🖨️ Print Invoice</button>
+
+  <div class="invoice-container">
+    <!-- Header -->
+    <div class="header">
+      <img id="header_image" src="https://raw.githubusercontent.com/kounsokong/sek_meas/refs/heads/main/sek_meas_header.png" alt="Company Header">
+    </div>
+
+    <!-- Title -->
+    <div class="title">
+      <h2>វិក្កយបត្រ<br>INVOICE</h2>
+    </div>
+
+    <!-- Invoice Info -->
+    <div class="invoice-info">
+      <!-- Left: Customer Info -->
+      <div class="left">
+        <table class="no-border">
+          <tr><td>Customer: <span id="customer_name"></span></td></tr>
+          <tr><td>Address: <span id="address"></span></td></tr>
+          <tr><td>Tel: <span id="phone"></span></td></tr>
+        </table>
+      </div>
+
+      <!-- Right: Invoice Info -->
+      <div class="right">
+        <table class="no-border invoice-meta" style="float: right;">
+          <tr>
+            <td>
+              <div class="kh-label">លេខវិក្កយបត្រ</div>
+              <div>Invoice No:</div>
+            </td>
+            <td class="meta-value">
+              <strong id="invoice_no"></strong>
+              <div class="dotted-line"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="kh-label">កាលបរិច្ឆេទ</div>
+              <div>Date:</div>
+            </td>
+            <td class="meta-value">
+              <span id="date"></span>
+              <div class="dotted-line"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 5%; text-align: center;">ល.រ<br>No</th>
+          <th style="width: 30%;">បរិយាយមុខទំនិញ<br>Description</th>
+          <th style="width: 10%; text-align: center;">បរិមាណ<br>Quantity</th>
+          <th style="width: 12%;">តម្លៃឯកតា<br>Unit Price</th>
+          <th style="width: 13%;">តម្លៃសរុប<br>Amount (USD)</th>
+        </tr>
+      </thead>
+      <tbody id="items_tbody">
+        <!-- Items will be inserted here -->
+      </tbody>
+    </table>
+
+    <!-- Totals -->
+    <table class="totals">
+      <tr>
+        <td>សរុបរួម / Grand Total:</td>
+        <td class="right" id="grand_total"></td>
+      </tr>
+      <tr class="bold">
+        <td></td>
+      </tr>
+    </table>
+
+    <!-- Signatures -->
+    <div class="footer">
+      <div class="signature">
+        <div class="signature-line"></div>
+        <p>Customer's Signature & Name<br>ហត្ថលេខា និងឈ្មោះអតិថិជន</p>
+      </div>
+      
+      <div class="signature">
+        <div class="signature-line"></div>
+        <p>Seller's Signature & Name<br>ហត្ថលេខា និងឈ្មោះអ្នកលក់</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Parse URL parameters
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const data = {};
+      for (const [key, value] of params) {
+        data[key] = decodeURIComponent(value);
+      }
+      return data;
+    }
+
+    // Populate invoice data
+    function populateInvoice() {
+      const data = getUrlParams();
+      
+      // Handle header image dynamically
+      const headerImage = document.getElementById('header_image');
+      if (data.header_image_url) {
+        headerImage.src = data.header_image_url;
+      }
+      
+      // Simple fields
+      const fields = [
+        'customer_name', 'address',
+        'phone', 'vat_tin', 'invoice_no', 'date', 'subtotal',
+        'vat_amount', 'grand_total'
+      ];
+      
+      fields.forEach(field => {
+        const element = document.getElementById(field);
+        if (element && data[field]) {
+          element.textContent = data[field];
+        }
+      });
+
+      // Handle line items (support multiple items)
+      const tbody = document.getElementById('items_tbody');
+      tbody.innerHTML = '';
+      
+      // Check if items are passed as JSON or individual parameters
+      if (data.items) {
+        try {
+          const items = JSON.parse(data.items);
+          items.forEach((item, index) => {
+            addItemRow(index + 1, item);
+          });
+        } catch (e) {
+          console.error('Error parsing items:', e);
+        }
+      } else {
+        // Single item from individual parameters
+        const item = {
+          no: data.no || '1',
+          item_name: data.item_name || '',
+          qty: data.item_qty || '',
+          rate: data.rate || '',
+          amount: data.amount || ''
+        };
+        addItemRow(item.no, item);
+      }
+    }
+
+    function addItemRow(no, item) {
+      const tbody = document.getElementById('items_tbody');
+      const row = tbody.insertRow();
+      
+      row.innerHTML = `
+        <td style="text-align: center;">${no}</td>
+        <td>${item.item_name} ${item.description || ''}</td>
+        <td style="text-align: center;">${item.qty || ''}</td>
+        <td class="right">${item.rate || ''}</td>
+        <td class="right">${item.amount || ''}</td>
+      `;
+    }
+
+    // Load data when page loads
+    window.onload = populateInvoice;
+  </script>
+</body>
+</html>
