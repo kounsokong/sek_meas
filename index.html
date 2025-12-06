@@ -6,17 +6,17 @@
   <title>Commercial Invoice - Angkobodia Logistics Co., Ltd</title>
   <style>
     @page {
-      size: A5;
-      margin: 5mm;
+      size: A4;
+      margin: 5mm 5mm 5mm 5mm;
     }
 
     body {
       font-family: "Khmer OS Battambang", Arial, sans-serif;
-      width: 138mm;
+      width: 205mm;
       margin: 0 auto;
       color: #000;
-      font-size: 8px;
-      line-height: 1.1;
+      font-size: 10px;
+      line-height: 1.2;
       background: #f5f5f5;
       padding: 5mm 0;
     }
@@ -24,29 +24,36 @@
     .invoice-container {
       background: white;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 4mm;
+      padding: 5mm;
       margin: 0 auto;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
+      position: running(header);
     }
 
     .header img {
       width: 100%;
-      max-height: 100px;
+      max-height: 160px;
       object-fit: contain;
       display: block;
     }
 
+    @page {
+      @top-center {
+        content: element(header);
+      }
+    }
+
     .title {
       text-align: center;
-      margin: 2px 0;
+      margin: 3px 0;
     }
 
     .title h2 {
-      font-size: 14px;
+      font-size: 18px;
       margin: 0;
       font-weight: bold;
     }
@@ -54,66 +61,68 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 9px;
+      font-size: 12px;
     }
 
     th, td {
       border: 1px solid #000;
-      padding: 2px 3px;
+      padding: 3px 4px;
       vertical-align: top;
     }
 
     .no-border td {
       border: none;
-      padding: 1px 0;
+      padding: 2px 0;
     }
 
     .invoice-info {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .invoice-info .left {
-      width: 58%;
+      width: 60%;
       border: 1px solid #000;
-      padding: 4px 6px;
+      padding: 6px 8px;
       border-radius: 2px;
     }
 
     .invoice-info .right {
-      width: 38%;
+      width: 35%;
     }
 
     .invoice-meta td {
       vertical-align: top;
-      padding: 1px 4px;
+      padding: 2px 6px;
     }
 
     .kh-label {
       font-family: "Khmer OS Battambang", Arial, sans-serif;
-      font-size: 9px;
+      font-size: 12px;
       font-weight: bold;
-      margin-bottom: -1px;
+      margin-bottom: -2px;
     }
 
     .meta-value {
       text-align: left;
-      font-size: 9px;
-      padding-left: 6px;
+      font-size: 12px;
+      padding-left: 10px;
       font-weight: normal;
+      position: relative;
     }
 
     .meta-value strong {
       font-weight: bold;
-      font-size: 9px;
+      font-size: 12px;
     }
 
     .dotted-line {
-      border-bottom: 1px dotted #000;
+      border-bottom: 2px dotted #000;
       width: 100%;
-      margin-top: 1px;
+      margin-top: 2px;
     }
+
 
     .right {
       text-align: right;
@@ -123,18 +132,22 @@
       font-weight: bold;
     }
 
+    .exchange {
+      margin-top: 6px;
+      font-size: 10px;
+    }
+
     .totals {
-      width: 50%;
+      width: 45%;
       float: right;
       margin-top: 2px;
-      margin-bottom: 30px;
+      margin-bottom: 50px;
       border-collapse: collapse;
     }
 
     .totals td {
       border: none;
-      padding: 2px 0;
-      font-size: 9px;
+      padding: 3px 0;
     }
 
     .totals .bold td {
@@ -143,7 +156,7 @@
 
     .footer {
       clear: both;
-      margin-top: 15px;
+      margin-top: 20px;
       page-break-inside: avoid;
       display: flex;
       justify-content: space-between;
@@ -152,26 +165,31 @@
     .signature {
       width: 45%;
       text-align: center;
-      font-size: 7px;
     }
 
     .signature-line {
       border-top: 1px solid #000;
       width: 80%;
-      margin: 25px auto 4px;
+      margin: 35px auto 5px;
+    }
+
+    .note {
+      font-size: 8px;
+      margin-top: 0px;
+      clear: both;
     }
 
     .print-button {
       position: fixed;
       top: 20px;
       right: 20px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       background: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 16px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       z-index: 1000;
     }
@@ -198,7 +216,7 @@
   </style>
 </head>
 <body>
-  <button class="print-button" onclick="window.print()">🖨️ Print</button>
+  <button class="print-button" onclick="window.print()">🖨️ Print Invoice</button>
 
   <div class="invoice-container">
     <!-- Header -->
@@ -254,8 +272,8 @@
       <thead>
         <tr>
           <th style="width: 5%; text-align: center;">ល.រ<br>No</th>
-          <th style="width: 35%;">បរិយាយមុខទំនិញ<br>Description</th>
-          <th style="width: 10%; text-align: center;">បរិមាណ<br>Qty</th>
+          <th style="width: 30%;">បរិយាយមុខទំនិញ<br>Description</th>
+          <th style="width: 10%; text-align: center;">បរិមាណ<br>Quantity</th>
           <th style="width: 12%;">តម្លៃឯកតា<br>Unit Price</th>
           <th style="width: 13%;">តម្លៃសរុប<br>Amount</th>
         </tr>
@@ -268,7 +286,7 @@
     <!-- Totals -->
     <table class="totals">
       <tr>
-        <td>Grand Total:</td>
+        <td>សរុបរួម / Grand Total:</td>
         <td class="right" id="grand_total"></td>
       </tr>
       <tr class="bold">
@@ -281,12 +299,12 @@
     <div class="footer">
       <div class="signature">
         <div class="signature-line"></div>
-        <p>Customer's Signature<br>ហត្ថលេខាអតិថិជន</p>
+        <p>Customer's Signature & Name<br>ហត្ថលេខា និងឈ្មោះអតិថិជន</p>
       </div>
       
       <div class="signature">
         <div class="signature-line"></div>
-        <p>Seller's Signature<br>ហត្ថលេខាអ្នកលក់</p>
+        <p>Seller's Signature & Name<br>ហត្ថលេខា និងឈ្មោះអ្នកលក់</p>
       </div>
     </div>
 
